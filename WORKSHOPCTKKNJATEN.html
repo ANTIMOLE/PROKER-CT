@@ -1,0 +1,2442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop CT - Toko Berkah Jaya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .tab.active {
+            background: white;
+            border-bottom: 3px solid #3498db;
+            color: #3498db;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .excel-table th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .excel-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background 0.3s ease;
+        }
+
+        .excel-table tr:hover {
+            background: #9ac7f4;
+        }
+
+        .excel-table tr:nth-child(even) {
+            background: #f8f9fb;
+        }
+
+        .formula-box {
+            background: #f1f3f4;
+            border: 2px solid #dadce0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-safe { background: #d4edda; color: #155724; }
+        .status-warning { background: #fff3cd; color: #856404; }
+        .status-danger { background: #f8d7da; color: #721c24; }
+        .status-good { background: #cce5ff; color: #0056b3; }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #e74c3c;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success { background: linear-gradient(135deg, #27ae60 0%, #219a52 100%); }
+        .btn-warning { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); }
+        .btn-danger { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid;
+        }
+
+        .alert-success { background: #d4edda; border-color: #27ae60; color: #155724; }
+        .alert-warning { background: #fff3cd; border-color: #f39c12; color: #856404; }
+        .alert-danger { background: #f8d7da; border-color: #e74c3c; color: #721c24; }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            transition: width 0.5s ease;
+        }
+
+        .ct-pillar {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid;
+        }
+
+        .ct-decomposition { border-left-color: #e74c3c; }
+        .ct-pattern { border-left-color: #f39c12; }
+        .ct-abstraction { border-left-color: #27ae60; }
+        .ct-algorithm { border-left-color: #9b59b6; }
+
+        .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .responsive-table {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                padding: 12px;
+                font-size: 1em;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric-value {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Toko Berkah Jaya</h1>
+            <p>Workshop Computational Thinking dengan Excel</p>
+            <p>Karang Taruna Dukuh Jaten</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('dashboard')">Dashboard</button>
+            <button class="tab" onclick="showTab('decomposition')">Dekomposisi</button>
+            <button class="tab" onclick="showTab('pattern')">Pattern Recognition</button>
+            <button class="tab" onclick="showTab('abstraction')">Abstraksi</button>
+            <button class="tab" onclick="showTab('algorithm')">Algoritma</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="section-title">Dashboard Eksekutif Pak Budi</div>
+            
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="totalSales">Rp 2,145,000</div>
+                    <div class="metric-label">Penjualan Hari Ini</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="totalProfit">Rp 434,000</div>
+                    <div class="metric-label">Keuntungan Hari Ini</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="lowStockCount">5</div>
+                    <div class="metric-label">Produk Hampir Habis</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="topProduct">Minyak Goreng</div>
+                    <div class="metric-label">Produk Terlaris</div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Status Pencapaian Target</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 125%"></div>
+                </div>
+                <p><strong>125%</strong> dari target harian (Rp 1,600,000)</p>
+            </div>
+
+            <div class="responsive-table">
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Metrik Kunci</th>
+                            <th>Nilai Hari Ini</th>
+                            <th>Target</th>
+                            <th>Pencapaian</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Penjualan</td>
+                            <td>Rp 2,145,000</td>
+                            <td>Rp 1,600,000</td>
+                            <td>125%</td>
+                            <td><span class="status-badge status-good">✓ Tercapai</span></td>
+                        </tr>
+                        <tr>
+                            <td>Keuntungan</td>
+                            <td>Rp 434,000</td>
+                            <td>Rp 320,000</td>
+                            <td>136%</td>
+                            <td><span class="status-badge status-good">✓ Tercapai</span></td>
+                        </tr>
+                        <tr>
+                            <td>Stok Aman</td>
+                            <td>15/20</td>
+                            <td>18/20</td>
+                            <td>75%</td>
+                            <td><span class="status-badge status-warning">⚠ Perhatian</span></td>
+                        </tr>
+                        <tr>
+                            <td>Kepuasan Pelanggan</td>
+                            <td>4.2/5</td>
+                            <td>4.0/5</td>
+                            <td>105%</td>
+                            <td><span class="status-badge status-good">✓ Tercapai</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Decomposition Tab -->
+        <div id="decomposition" class="tab-content">
+            <div class="section-title">🔧 Dekomposisi - Memecah Masalah Besar Menjadi Bagian Kecil</div>
+            
+            <div class="ct-pillar ct-decomposition">
+                <h3><span class="icon">🔧</span>Apa itu Dekomposisi?</h3>
+                <p>Dekomposisi adalah proses memecah masalah yang rumit menjadi bagian-bagian yang lebih sederhana dan mudah dipahami. Dalam pengelolaan Toko Berkah Jaya, kita akan memecah sistem manajemen toko menjadi 4 komponen utama.</p>
+            </div>
+
+            <div class="ct-pillar ct-decomposition">
+                <h4>🎯 Mengapa Dekomposisi Penting?</h4>
+                <ul style="padding: 1rem; line-height: 1.8;">
+                    <li><strong>Memudahkan Pemahaman:</strong> Masalah besar menjadi mudah dipahami</li>
+                    <li><strong>Efisiensi Kerja:</strong> Setiap bagian dapat dikerjakan secara fokus</li>
+                    <li><strong>Kemudahan Maintenance:</strong> Perbaikan dapat dilakukan per bagian</li>
+                    <li><strong>Teamwork:</strong> Berbagai orang dapat mengerjakan bagian yang berbeda</li>
+                </ul>
+            </div>
+
+            <div class="ct-pillar ct-decomposition">
+                <h4>🏗️ Langkah-langkah Dekomposisi Toko Berkah Jaya</h4>
+                <div style="padding: 1rem;">
+                    <div style="background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #3498db;">
+                        <h5>Langkah 1: Identifikasi Masalah Utama</h5>
+                        <p><strong>Masalah:</strong> Pak Budi kesulitan mengelola toko secara manual</p>
+                    </div>
+                    <div style="background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #e74c3c;">
+                        <h5>Langkah 2: Pecah Menjadi Sub-masalah</h5>
+                        <p><strong>Sub-masalah:</strong> Data produk, Transaksi, Stok, Laporan</p>
+                    </div>
+                    <div style="background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #27ae60;">
+                        <h5>Langkah 3: Buat Solusi untuk Setiap Bagian</h5>
+                        <p><strong>Solusi:</strong> Buat sheet Excel terpisah untuk setiap fungsi</p>
+                    </div>
+                    <div style="background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                        <h5>Langkah 4: Hubungkan Semua Bagian</h5>
+                        <p><strong>Integrasi:</strong> Gunakan rumus Excel untuk menghubungkan data</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="responsive-table">
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Komponen</th>
+                            <th>Fungsi Utama</th>
+                            <th>Data Input</th>
+                            <th>Data Output</th>
+                            <th>Prioritas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><strong>Master_Produk</strong></td>
+                            <td>Menyimpan data referensi produk</td>
+                            <td>Kode, Nama, Harga Beli, Harga Jual, Stok</td>
+                            <td>Database produk lengkap</td>
+                            <td><span class="status-badge status-danger">Tinggi</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><strong>Transaksi_Harian</strong></td>
+                            <td>Mencatat setiap penjualan</td>
+                            <td>Tanggal, Produk, Qty, Harga, Total</td>
+                            <td>Log penjualan harian</td>
+                            <td><span class="status-badge status-danger">Tinggi</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><strong>Laporan_Stok</strong></td>
+                            <td>Monitor stok realtime</td>
+                            <td>Stok awal, Terjual, Stok akhir</td>
+                            <td>Alert restok otomatis</td>
+                            <td><span class="status-badge status-warning">Sedang</span></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><strong>Dashboard</strong></td>
+                            <td>Ringkasan untuk pengambilan keputusan</td>
+                            <td>Data dari semua komponen</td>
+                            <td>KPI dan laporan eksekutif</td>
+                            <td><span class="status-badge status-good">Rendah</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>📋 1. Master Data Produk</h3>
+                <p><strong>Tujuan:</strong> Menyimpan semua informasi produk yang dijual di toko</p>
+                <div class="responsive-table">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Nama Produk</th>
+                                <th>Harga Beli</th>
+                                <th>Harga Jual</th>
+                                <th>Stok Awal</th>
+                                <th>Margin (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>BRS001</td>
+                                <td>Beras Premium</td>
+                                <td>Rp 12,000</td>
+                                <td>Rp 15,000</td>
+                                <td>50</td>
+                                <td>25%</td>
+                            </tr>
+                            <tr>
+                                <td>MYK001</td>
+                                <td>Minyak Goreng</td>
+                                <td>Rp 16,000</td>
+                                <td>Rp 20,000</td>
+                                <td>30</td>
+                                <td>25%</td>
+                            </tr>
+                            <tr>
+                                <td>GUL001</td>
+                                <td>Gula Pasir</td>
+                                <td>Rp 13,000</td>
+                                <td>Rp 16,000</td>
+                                <td>25</td>
+                                <td>23%</td>
+                            </tr>
+                            <tr>
+                                <td>TEH001</td>
+                                <td>Teh Kotak</td>
+                                <td>Rp 5,000</td>
+                                <td>Rp 6,500</td>
+                                <td>100</td>
+                                <td>30%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>📋 2. Transaksi Harian</h3>
+                <p><strong>Tujuan:</strong> Mencatat setiap penjualan yang terjadi</p>
+                <div class="responsive-table">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Kode Produk</th>
+                                <th>Nama Produk</th>
+                                <th>QTY</th>
+                                <th>Harga</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2024-01-15</td>
+                                <td>BRS001</td>
+                                <td>Beras Premium</td>
+                                <td>5</td>
+                                <td>Rp 15,000</td>
+                                <td>Rp 75,000</td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-15</td>
+                                <td>MYK001</td>
+                                <td>Minyak Goreng</td>
+                                <td>8</td>
+                                <td>Rp 20,000</td>
+                                <td>Rp 160,000</td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-15</td>
+                                <td>GUL001</td>
+                                <td>Gula Pasir</td>
+                                <td>10</td>
+                                <td>Rp 16,000</td>
+                                <td>Rp 160,000</td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-15</td>
+                                <td>TEH001</td>
+                                <td>Teh Kotak</td>
+                                <td>20</td>
+                                <td>Rp 6,500</td>
+                                <td>Rp 130,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>📋 3. Laporan Stok</h3>
+                <p><strong>Tujuan:</strong> Memantau persediaan barang secara real-time</p>
+                <div class="responsive-table">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th>Produk</th>
+                                <th>Stok Awal</th>
+                                <th>Terjual</th>
+                                <th>Stok Akhir</th>
+                                <th>Min. Stok</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Beras Premium</td>
+                                <td>50</td>
+                                <td>5</td>
+                                <td>45</td>
+                                <td>10</td>
+                                <td><span class="status-badge status-safe">Aman</span></td>
+                            </tr>
+                            <tr>
+                                <td>Minyak Goreng</td>
+                                <td>30</td>
+                                <td>8</td>
+                                <td>22</td>
+                                <td>5</td>
+                                <td><span class="status-badge status-safe">Aman</span></td>
+                            </tr>
+                            <tr>
+                                <td>Gula Pasir</td>
+                                <td>25</td>
+                                <td>10</td>
+                                <td>15</td>
+                                <td>8</td>
+                                <td><span class="status-badge status-warning">Perlu Restok</span></td>
+                            </tr>
+                            <tr>
+                                <td>Teh Kotak</td>
+                                <td>100</td>
+                                <td>20</td>
+                                <td>80</td>
+                                <td>20</td>
+                                <td><span class="status-badge status-safe">Aman</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>📋 4. Dashboard Eksekutif</h3>
+                <p><strong>Tujuan:</strong> Memberikan ringkasan informasi untuk pengambilan keputusan</p>
+                <div class="responsive-table">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th>KPI</th>
+                                <th>Nilai</th>
+                                <th>Target</th>
+                                <th>Status</th>
+                                <th>Tindakan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Penjualan Harian</td>
+                                <td>Rp 525,000</td>
+                                <td>Rp 500,000</td>
+                                <td><span class="status-badge status-good">Tercapai</span></td>
+                                <td>Pertahankan</td>
+                            </tr>
+                            <tr>
+                                <td>Margin Keuntungan</td>
+                                <td>25.7%</td>
+                                <td>25%</td>
+                                <td><span class="status-badge status-good">Tercapai</span></td>
+                                <td>Pertahankan</td>
+                            </tr>
+                            <tr>
+                                <td>Produk Perlu Restok</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td><span class="status-badge status-warning">Perhatian</span></td>
+                                <td>Restok Gula Pasir</td>
+                            </tr>
+                            <tr>
+                                <td>Produk Terlaris</td>
+                                <td>Teh Kotak</td>
+                                <td>-</td>
+                                <td><span class="status-badge status-good">Info</span></td>
+                                <td>Tambah Stok</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="ct-pillar ct-decomposition">
+                <h4>🔗 Hubungan Antar Komponen</h4>
+                <div style="padding: 1rem;">
+                    <div style="background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #3498db;">
+                        <h5>Master_Produk → Transaksi_Harian</h5>
+                        <p>Data produk digunakan untuk validasi dan pengambilan harga saat transaksi</p>
+                        <div class="formula-box">Formula: =VLOOKUP(KodeProduk,Master_Produk,HargaJual,0)</div>
+                    </div>
+                    <div style="background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #e74c3c;">
+                        <h5>Transaksi_Harian → Laporan_Stok</h5>
+                        <p>Data penjualan digunakan untuk menghitung stok yang tersisa</p>
+                        <div class="formula-box">Formula: =SUMIF(Transaksi_Harian,KodeProduk,Qty)</div>
+                    </div>
+                    <div style="background: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #27ae60;">
+                        <h5>Semua Komponen → Dashboard</h5>
+                        <p>Dashboard mengambil data dari semua komponen untuk analisis</p>
+                        <div class="formula-box">Formula: =SUM(Transaksi_Harian[Total])</div>
+                    </div>
+                </div>
+
+            
+            </div>
+        </div>
+        
+
+        <!-- Pattern Recognition Tab -->
+<div id="pattern" class="tab-content">
+    <div class="section-title">🔍 Pattern Recognition - Mengenali Pola</div>
+    
+    <div class="ct-pillar ct-pattern">
+        <h3><span class="icon">🔍</span>Analisis Pola Penjualan</h3>
+        <p>Mengidentifikasi pola dalam data untuk membuat prediksi yang akurat</p>
+    </div>
+
+    <div class="ct-pillar ct-pattern">
+        <h4>Definisi Pattern Recognition dalam Computational Thinking</h4>
+        <p style="padding: 1rem;">Pattern Recognition adalah kemampuan untuk mengidentifikasi kesamaan, perbedaan, dan keteraturan dalam data, situasi, atau masalah yang berbeda-beda. Dalam CT, pengenalan pola memungkinkan kita untuk melihat hubungan yang mendasari antara berbagai elemen, mengidentifikasi tren yang berulang, dan menemukan struktur yang dapat diprediksi dari informasi yang kompleks. Kemampuan ini sangat penting karena membantu dalam menyederhanakan masalah dengan mengenali bahwa solusi yang telah berhasil di satu konteks dapat diadaptasi untuk menyelesaikan masalah serupa di konteks lain.</p>
+    </div>
+
+    <!-- LANGKAH 1: Raw Data Analysis -->
+    <div class="dashboard-card">
+        <h3>📊 LANGKAH 1: Observasi Data Mentah</h3>
+        <p><strong>Menganalisis data penjualan 2 minggu terakhir untuk mencari pola tersembunyi:</strong></p>
+        <div class="responsive-table">
+            <table class="excel-table">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Hari</th>
+                        <th>Beras</th>
+                        <th>Minyak</th>
+                        <th>Gula</th>
+                        <th>Sabun</th>
+                        <th>Total</th>
+                        <th>Cuaca</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1 Jul</td>
+                        <td>Senin</td>
+                        <td>5</td>
+                        <td>8</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>18</td>
+                        <td>Cerah</td>
+                    </tr>
+                    <tr>
+                        <td>2 Jul</td>
+                        <td>Selasa</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>21</td>
+                        <td>Cerah</td>
+                    </tr>
+                    <tr>
+                        <td>3 Jul</td>
+                        <td>Rabu</td>
+                        <td>3</td>
+                        <td>12</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>24</td>
+                        <td>Cerah</td>
+                    </tr>
+                    <tr>
+                        <td>4 Jul</td>
+                        <td>Kamis</td>
+                        <td>6</td>
+                        <td>9</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>20</td>
+                        <td>Hujan</td>
+                    </tr>
+                    <tr>
+                        <td>5 Jul</td>
+                        <td>Jumat</td>
+                        <td>8</td>
+                        <td>15</td>
+                        <td>6</td>
+                        <td>5</td>
+                        <td>34</td>
+                        <td>Cerah</td>
+                    </tr>
+                    <tr>
+                        <td>6 Jul</td>
+                        <td>Sabtu</td>
+                        <td>12</td>
+                        <td>18</td>
+                        <td>8</td>
+                        <td>7</td>
+                        <td>45</td>
+                        <td>Cerah</td>
+                    </tr>
+                    <tr>
+                        <td>7 Jul</td>
+                        <td>Minggu</td>
+                        <td>6</td>
+                        <td>11</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>24</td>
+                        <td>Cerah</td>
+                    </tr>
+                    <tr>
+                        <td>8 Jul</td>
+                        <td>Senin</td>
+                        <td>4</td>
+                        <td>7</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>16</td>
+                        <td>Hujan</td>
+                    </tr>
+                    <tr>
+                        <td>9 Jul</td>
+                        <td>Selasa</td>
+                        <td>5</td>
+                        <td>11</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>23</td>
+                        <td>Cerah</td>
+                    </tr>
+                    <tr>
+                        <td>10 Jul</td>
+                        <td>Rabu</td>
+                        <td>3</td>
+                        <td>13</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td>25</td>
+                        <td>Cerah</td>
+                    </tr>
+                    <tr>
+                        <td>11 Jul</td>
+                        <td>Kamis</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>20</td>
+                        <td>Hujan</td>
+                    </tr>
+                    <tr>
+                        <td>12 Jul</td>
+                        <td>Jumat</td>
+                        <td>9</td>
+                        <td>16</td>
+                        <td>7</td>
+                        <td>6</td>
+                        <td>38</td>
+                        <td>Cerah</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-warning">
+            <strong>🤔 MASALAH:</strong> Ada begitu banyak angka! Bagaimana cara menemukan pola yang tersembunyi di balik data-data ini?
+        </div>
+    </div>
+
+    <!-- LANGKAH 2: Identify Patterns -->
+    <div class="dashboard-card">
+        <h3>🔍 LANGKAH 2: Identifikasi Pola-Pola Tersembunyi</h3>
+        <p><strong>Mengelompokkan data untuk menemukan pola yang berulang:</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>📅 POLA BERDASARKAN HARI</h4>
+                <div class="formula-box">
+                    <strong>Rumus Excel:</strong><br>
+                    =AVERAGEIF(B:B,"Senin",H:H)<br>
+                    =AVERAGEIF(B:B,"Sabtu",H:H)
+                </div>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Hari</th>
+                            <th>Rata-rata Penjualan</th>
+                            <th>Kategori</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Senin</td>
+                            <td>17 unit</td>
+                            <td><span class="status-badge status-warning">Rendah</span></td>
+                        </tr>
+                        <tr>
+                            <td>Selasa</td>
+                            <td>22 unit</td>
+                            <td><span class="status-badge status-good">Sedang</span></td>
+                        </tr>
+                        <tr>
+                            <td>Rabu</td>
+                            <td>24.5 unit</td>
+                            <td><span class="status-badge status-good">Sedang</span></td>
+                        </tr>
+                        <tr>
+                            <td>Kamis</td>
+                            <td>20 unit</td>
+                            <td><span class="status-badge status-warning">Rendah</span></td>
+                        </tr>
+                        <tr>
+                            <td>Jumat</td>
+                            <td>36 unit</td>
+                            <td><span class="status-badge status-safe">Tinggi</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sabtu</td>
+                            <td>45 unit</td>
+                            <td><span class="status-badge status-safe">Sangat Tinggi</span></td>
+                        </tr>
+                        <tr>
+                            <td>Minggu</td>
+                            <td>24 unit</td>
+                            <td><span class="status-badge status-good">Sedang</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>🌤️ POLA BERDASARKAN CUACA</h4>
+                <div class="formula-box">
+                    <strong>Rumus Excel:</strong><br>
+                    =AVERAGEIF(I:I,"Cerah",H:H)<br>
+                    =AVERAGEIF(I:I,"Hujan",H:H)
+                </div>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Cuaca</th>
+                            <th>Rata-rata Penjualan</th>
+                            <th>Dampak</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cerah</td>
+                            <td>28 unit</td>
+                            <td><span class="status-badge status-safe">Positif +40%</span></td>
+                        </tr>
+                        <tr>
+                            <td>Hujan</td>
+                            <td>18 unit</td>
+                            <td><span class="status-badge status-danger">Negatif -28%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- LANGKAH 3: Pattern by Product -->
+    <div class="dashboard-card">
+        <h3>🎯 LANGKAH 3: Pola Berdasarkan Produk</h3>
+        <p><strong>Menganalisis perilaku penjualan setiap produk:</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>📈 TREND PRODUK</h4>
+                <div class="formula-box">
+                    <strong>Rumus Excel:</strong><br>
+                    =SLOPE(C2:C13,A2:A13) untuk trend line<br>
+                    =IF(SLOPE>0,"Naik","Turun")
+                </div>
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Produk</th>
+                            <th>Trend 2 Minggu</th>
+                            <th>Volatilitas</th>
+                            <th>Prediksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Beras</td>
+                            <td>📈 Naik 15%</td>
+                            <td>Sedang</td>
+                            <td>Stabil Naik</td>
+                        </tr>
+                        <tr>
+                            <td>Minyak</td>
+                            <td>📈 Naik 25%</td>
+                            <td>Tinggi</td>
+                            <td>Terus Naik</td>
+                        </tr>
+                        <tr>
+                            <td>Gula</td>
+                            <td>📈 Naik 8%</td>
+                            <td>Rendah</td>
+                            <td>Stabil</td>
+                        </tr>
+                        <tr>
+                            <td>Sabun</td>
+                            <td>📈 Naik 12%</td>
+                            <td>Sedang</td>
+                            <td>Naik Perlahan</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>🔄 POLA SIKLUS MINGGUAN</h4>
+                <div class="formula-box">
+                    <strong>Rumus Excel:</strong><br>
+                    =AVERAGE(IF(WEEKDAY(A:A)=2,H:H)) untuk Senin<br>
+                    =AVERAGE(IF(WEEKDAY(A:A)=7,H:H)) untuk Sabtu
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 35%"></div>
+                </div>
+                <p><strong>Senin-Kamis:</strong> 35% dari total penjualan mingguan</p>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%"></div>
+                </div>
+                <p><strong>Jumat-Minggu:</strong> 65% dari total penjualan mingguan</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LANGKAH 4: Pattern Recognition Rules -->
+    <div class="dashboard-card">
+        <h3>📋 LANGKAH 4: Membuat Aturan Berdasarkan Pola</h3>
+        <p><strong>Mengubah pola yang ditemukan menjadi aturan bisnis:</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>⚡ ATURAN OTOMATIS</h4>
+                <div class="formula-box">
+                    <strong>IF-THEN Rules:</strong><br>
+                    1. IF hari = "Sabtu" THEN stok += 50%<br>
+                    2. IF cuaca = "Hujan" THEN promo += 10%<br>
+                    3. IF hari = "Jumat" THEN restok sebelum weekend<br>
+                    4. IF minyak trend > 20% THEN prioritas restok<br>
+                    5. IF Senin-Kamis THEN fokus promosi
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Kondisi</th>
+                            <th>Aksi Otomatis</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sabtu & Jumat</td>
+                            <td>Tambah stok 50%</td>
+                            <td><span class="status-badge status-safe">Aktif</span></td>
+                        </tr>
+                        <tr>
+                            <td>Cuaca Hujan</td>
+                            <td>Promo 10% produk indoor</td>
+                            <td><span class="status-badge status-safe">Aktif</span></td>
+                        </tr>
+                        <tr>
+                            <td>Senin-Kamis</td>
+                            <td>Fokus promosi B2B</td>
+                            <td><span class="status-badge status-safe">Aktif</span></td>
+                        </tr>
+                        <tr>
+                            <td>Minyak trend tinggi</td>
+                            <td>Prioritas restok #1</td>
+                            <td><span class="status-badge status-safe">Aktif</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>🎯 PREDIKSI BERDASARKAN POLA</h4>
+                <div class="formula-box">
+                    <strong>Rumus Prediksi:</strong><br>
+                    Prediksi = (Trend × Hari) + (Cuaca × Modifier) + Base_Average<br>
+                    <br>
+                    Base_Average = rata-rata 2 minggu terakhir<br>
+                    Hari = multiplier berdasarkan hari (Sabtu=1.8, Senin=0.7)<br>
+                    Cuaca = +15% cerah, -20% hujan
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Besok (Sabtu)</th>
+                            <th>Prediksi Cerah</th>
+                            <th>Prediksi Hujan</th>
+                            <th>Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Beras</td>
+                            <td>14 unit</td>
+                            <td>9 unit</td>
+                            <td>85%</td>
+                        </tr>
+                        <tr>
+                            <td>Minyak</td>
+                            <td>21 unit</td>
+                            <td>14 unit</td>
+                            <td>90%</td>
+                        </tr>
+                        <tr>
+                            <td>Gula</td>
+                            <td>9 unit</td>
+                            <td>6 unit</td>
+                            <td>80%</td>
+                        </tr>
+                        <tr>
+                            <td>Sabun</td>
+                            <td>8 unit</td>
+                            <td>5 unit</td>
+                            <td>75%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- LANGKAH 5: Pattern Application -->
+    <div class="dashboard-card">
+        <h3>🚀 LANGKAH 5: Aplikasi Pola untuk Keputusan Bisnis</h3>
+        <p><strong>Menggunakan pola yang ditemukan untuk membuat keputusan strategis:</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">STRATEGI WEEKEND</div>
+                <div class="metric-label">Sabtu = 80% dari total mingguan<br>Siapkan stok 2x lipat</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">STRATEGI CUACA</div>
+                <div class="metric-label">Hujan = -28% penjualan<br>Aktifkan promo otomatis</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">STRATEGI PRODUK</div>
+                <div class="metric-label">Minyak trend tertinggi<br>Prioritas restok #1</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">STRATEGI TIMING</div>
+                <div class="metric-label">Restok Kamis malam<br>Siap untuk weekend peak</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits of Pattern Recognition -->
+    <div class="dashboard-card">
+        <h3>🏆 Manfaat Pattern Recognition</h3>
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>❌ SEBELUM (Tidak Mengenali Pola)</h4>
+                <ul>
+                    <li>Stok habis di weekend</li>
+                    <li>Tidak siap menghadapi cuaca</li>
+                    <li>Restok tidak tepat waktu</li>
+                    <li>Kehilangan peluang penjualan</li>
+                    <li>Keputusan berdasarkan intuisi</li>
+                </ul>
+            </div>
+            <div class="dashboard-card">
+                <h4>✅ SESUDAH (Menggunakan Pola)</h4>
+                <ul>
+                    <li>Stok selalu cukup di weekend</li>
+                    <li>Siap dengan strategi cuaca</li>
+                    <li>Restok tepat waktu</li>
+                    <li>Maksimalkan penjualan</li>
+                    <li>Keputusan berdasarkan data</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Algorithm Tab -->
+<div id="algorithm" class="tab-content">
+    <div class="section-title">⚙️ Algoritma - Langkah Sistematis</div>
+    
+    <div class="ct-pillar ct-algorithm">
+        <h3><span class="icon">⚙️</span>Algoritma Pengambilan Keputusan</h3>
+        <p>Membuat proses sistematis untuk otomatisasi keputusan bisnis</p>
+    </div>
+
+    <div class="ct-pillar ct-algorithm">
+        <h4>Definisi Algoritma dalam Computational Thinking</h4>
+        <p style="padding: 1rem;">Algoritma adalah serangkaian instruksi atau langkah-langkah yang terstruktur, logis, dan berurutan untuk menyelesaikan suatu masalah atau mencapai tujuan tertentu. Dalam CT, algoritma berfungsi sebagai "resep" yang dapat diikuti secara sistematis untuk menghasilkan solusi yang konsisten dan dapat diprediksi. Algoritma yang baik memiliki karakteristik: jelas (setiap langkah tidak ambigu), terbatas (memiliki titik awal dan akhir), efektif (setiap langkah dapat dilakukan), dan deterministik (menghasilkan output yang sama untuk input yang sama). Dalam konteks bisnis, algoritma memungkinkan otomatisasi proses pengambilan keputusan, mengurangi kesalahan manusia, dan memastikan konsistensi dalam operasional.</p>
+    </div>
+
+    <!-- LANGKAH 1: Problem Definition -->
+    <div class="dashboard-card">
+        <h3>🎯 LANGKAH 1: Definisi Masalah yang Ingin Dipecahkan</h3>
+        <p><strong>Mengidentifikasi masalah-masalah spesifik yang perlu diselesaikan dengan algoritma:</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>❌ MASALAH UTAMA</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                        <strong>🔴 Stok Habis:</strong> Sering kehabisan stok di weekend
+                    </li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                        <strong>🔴 Keputusan Lambat:</strong> Butuh waktu lama untuk putuskan restok
+                    </li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                        <strong>🔴 Tidak Konsisten:</strong> Kadang order terlalu banyak/sedikit
+                    </li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                        <strong>🔴 Miss Opportunity:</strong> Tidak tahu kapan harus promosi
+                    </li>
+                    <li style="padding: 8px 0;">
+                        <strong>🔴 Manual Error:</strong> Lupa cek stok, supplier, dll
+                    </li>
+                </ul>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>✅ SOLUSI YANG DIBUTUHKAN</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                        <strong>🎯 Algoritma Restok:</strong> Kapan dan berapa banyak order
+                    </li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                        <strong>🎯 Algoritma Prioritas:</strong> Produk mana yang didahulukan
+                    </li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                        <strong>🎯 Algoritma Supplier:</strong> Pilih supplier terbaik
+                    </li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                        <strong>🎯 Algoritma Promosi:</strong> Kapan dan produk apa
+                    </li>
+                    <li style="padding: 8px 0;">
+                        <strong>🎯 Algoritma Monitoring:</strong> Cek otomatis harian
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- LANGKAH 2: Flowchart Design -->
+    <div class="dashboard-card">
+        <h3>📊 LANGKAH 2: Desain Flowchart Algoritma</h3>
+        <p><strong>Membuat diagram alur untuk algoritma pengambilan keputusan restok:</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>🔄 ALGORITMA RESTOK OTOMATIS</h4>
+                <div class="formula-box">
+                    <strong>Flowchart Logic:</strong><br>
+                    START → Cek Stok Saat Ini → Hitung Proyeksi 7 Hari → Cek Lead Time Supplier → Hitung Safety Stock → Keputusan Restok → END
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <div style="text-align: center; font-family: monospace; line-height: 1.8;">
+                        <div style="background: #e74c3c; color: white; padding: 10px; border-radius: 50%; width: 100px; margin: 0 auto;">START</div>
+                        <div style="margin: 10px 0;">↓</div>
+                        <div style="background: #3498db; color: white; padding: 10px; border-radius: 10px;">Cek Stok Saat Ini</div>
+                        <div style="margin: 10px 0;">↓</div>
+                        <div style="background: #f39c12; color: white; padding: 10px; border-radius: 10px;">Hitung Proyeksi 7 Hari</div>
+                        <div style="margin: 10px 0;">↓</div>
+                        <div style="background: #9b59b6; color: white; padding: 10px; border-radius: 10px;">Safety Stock Check</div>
+                        <div style="margin: 10px 0;">↓</div>
+                        <div style="background: #27ae60; color: white; padding: 10px; border-radius: 10px;">Keputusan Restok</div>
+                        <div style="margin: 10px 0;">↓</div>
+                        <div style="background: #e74c3c; color: white; padding: 10px; border-radius: 50%; width: 100px; margin: 0 auto;">END</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>🔍 DECISION TREE</h4>
+                <div class="formula-box">
+                    <strong>Decision Points:</strong><br>
+                    1. Stok < 7 hari? → YES: Lanjut, NO: Stop<br>
+                    2. Produk fast-moving? → YES: Prioritas, NO: Normal<br>
+                    3. Supplier tersedia? → YES: Order, NO: Supplier alternatif<br>
+                    4. Budget cukup? → YES: Eksekusi, NO: Partial order
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Kondisi</th>
+                            <th>Aksi</th>
+                            <th>Prioritas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Stok < 3 hari + Fast Moving</td>
+                            <td>RESTOK SEGERA</td>
+                            <td><span class="status-badge status-danger">KRITIS</span></td>
+                        </tr>
+                        <tr>
+                            <td>Stok < 5 hari + Normal</td>
+                            <td>RESTOK PERLU</td>
+                            <td><span class="status-badge status-warning">TINGGI</span></td>
+                        </tr>
+                        <tr>
+                            <td>Stok < 7 hari + Slow Moving</td>
+                            <td>MONITOR DEKAT</td>
+                            <td><span class="status-badge status-good">SEDANG</span></td>
+                        </tr>
+                        <tr>
+                            <td>Stok > 7 hari</td>
+                            <td>TIDAK PERLU</td>
+                            <td><span class="status-badge status-safe">RENDAH</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- LANGKAH 3: Algorithm Implementation -->
+    <div class="dashboard-card">
+        <h3>💻 LANGKAH 3: Implementasi Algoritma dalam Excel</h3>
+        <p><strong>Mengubah flowchart menjadi formula Excel yang dapat dijalankan:</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>🔧 FORMULA ALGORITMA RESTOK</h4>
+                <div class="formula-box">
+                    <strong>1. Hitung Proyeksi 7 Hari:</strong><br>
+                    =AVERAGE(C2:C8)*7<br><br>
+                    <strong>2. Cek Safety Stock:</strong><br>
+                    =IF(stok_saat_ini < (proyeksi_7_hari * 0.3), "KRITIS", "AMAN")<br><br>
+                    <strong>3. Keputusan Restok:</strong><br>
+                    =IF(AND(stok_saat_ini < proyeksi_7_hari, safety_stock="KRITIS"), "RESTOK SEGERA", 
+                    IF(stok_saat_ini < proyeksi_7_hari*1.2, "RESTOK PERLU", "TIDAK PERLU"))<br><br>
+                    <strong>4. Jumlah Order:</strong><br>
+                    =MAX(0, (proyeksi_7_hari*2) - stok_saat_ini)
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Produk</th>
+                            <th>Stok Saat Ini</th>
+                            <th>Proyeksi 7 Hari</th>
+                            <th>Safety Stock</th>
+                            <th>Keputusan</th>
+                            <th>Jumlah Order</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Beras</td>
+                            <td>45</td>
+                            <td>42</td>
+                            <td><span class="status-badge status-safe">AMAN</span></td>
+                            <td>RESTOK PERLU</td>
+                            <td>39 karung</td>
+                        </tr>
+                        <tr>
+                            <td>Minyak</td>
+                            <td>25</td>
+                            <td>84</td>
+                            <td><span class="status-badge status-danger">KRITIS</span></td>
+                            <td>RESTOK SEGERA</td>
+                            <td>143 botol</td>
+                        </tr>
+                        <tr>
+                            <td>Gula</td>
+                            <td>30</td>
+                            <td>35</td>
+                            <td><span class="status-badge status-warning">HATI-HATI</span></td>
+                            <td>RESTOK PERLU</td>
+                            <td>40 kg</td>
+                        </tr>
+                        <tr>
+                            <td>Sabun</td>
+                            <td>50</td>
+                            <td>28</td>
+                            <td><span class="status-badge status-safe">AMAN</span></td>
+                            <td>TIDAK PERLU</td>
+                            <td>6 pack</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>⚡ ALGORITMA PRIORITAS SUPPLIER</h4>
+                <div class="formula-box">
+                    <strong>Scoring System:</strong><br>
+                    Score = (Harga_Score × 0.4) + (Kualitas × 0.3) + (Delivery × 0.2) + (Stok × 0.1)<br><br>
+                    <strong>Harga Score:</strong> =IF(harga<=rata_pasar, 10, 10-(harga-rata_pasar)/rata_pasar*10)<br>
+                    <strong>Auto Select:</strong> =INDEX(supplier_list, MATCH(MAX(score_list), score_list, 0))
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Supplier</th>
+                            <th>Harga Score</th>
+                            <th>Kualitas</th>
+                            <th>Delivery</th>
+                            <th>Stok</th>
+                            <th>Total Score</th>
+                            <th>Ranking</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #d4edda;">
+                            <td><strong>Supplier A</strong></td>
+                            <td>8.5</td>
+                            <td>9.0</td>
+                            <td>8.0</td>
+                            <td>9.5</td>
+                            <td><strong>8.65</strong></td>
+                            <td>🏆 #1</td>
+                        </tr>
+                        <tr>
+                            <td>Supplier B</td>
+                            <td>9.0</td>
+                            <td>7.5</td>
+                            <td>7.0</td>
+                            <td>8.0</td>
+                            <td>7.85</td>
+                            <td>#2</td>
+                        </tr>
+                        <tr>
+                            <td>Supplier C</td>
+                            <td>7.0</td>
+                            <td>8.0</td>
+                            <td>9.0</td>
+                            <td>7.5</td>
+                            <td>7.75</td>
+                            <td>#3</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- LANGKAH 4: Automation & Triggers -->
+    <div class="dashboard-card">
+        <h3>🤖 LANGKAH 4: Otomatisasi & Trigger System</h3>
+        <p><strong>Membuat sistem yang berjalan otomatis berdasarkan kondisi tertentu:</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>⏰ ALGORITMA SCHEDULE OTOMATIS</h4>
+                <div class="formula-box">
+                    <strong>Daily Check Algorithm:</strong><br>
+                    1. Setiap jam 06:00 → Jalankan algoritma restok<br>
+                    2. Setiap jam 14:00 → Update data penjualan<br>
+                    3. Setiap jam 18:00 → Prediksi besok<br>
+                    4. Setiap Kamis 20:00 → Persiapan weekend<br>
+                    5. Setiap Minggu 22:00 → Laporan mingguan
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Waktu</th>
+                            <th>Algoritma</th>
+                            <th>Aksi</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>06:00</td>
+                            <td>Morning Stock Check</td>
+                            <td>Cek stok + alert jika perlu restok</td>
+                            <td><span class="status-badge status-safe">Aktif</span></td>
+                        </tr>
+                        <tr>
+                            <td>14:00</td>
+                            <td>Midday Update</td>
+                            <td>Update data penjualan real-time</td>
+                            <td><span class="status-badge status-safe">Aktif</span></td>
+                        </tr>
+                        <tr>
+                            <td>18:00</td>
+                            <td>Evening Prediction</td>
+                            <td>Prediksi penjualan besok</td>
+                            <td><span class="status-badge status-safe">Aktif</span></td>
+                        </tr>
+                        <tr>
+                            <td>Kamis 20:00</td>
+                            <td>Weekend Prep</td>
+                            <td>Persiapan stok weekend</td>
+                            <td><span class="status-badge status-safe">Aktif</span></td>
+                        </tr>
+                        <tr>
+                            <td>Minggu 22:00</td>
+                            <td>Weekly Report</td>
+                            <td>Generate laporan mingguan</td>
+                            <td><span class="status-badge status-safe">Aktif</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>🚨 SISTEM ALERT OTOMATIS</h4>
+                <div class="formula-box">
+                    <strong>Trigger Conditions:</strong><br>
+                    =IF(stok_saat_ini < critical_level, "SEND_ALERT", "OK")<br>
+                    =IF(penjualan_hari_ini > 150% * rata_rata, "SEND_RESTOCK_ALERT", "OK")<br>
+                    =IF(supplier_score < 7, "SEND_SUPPLIER_REVIEW", "OK")
+                </div>
+                
+                <div class="alert-system">
+                    <div class="alert alert-danger">
+                        <strong>🚨 ALERT KRITIS:</strong> Minyak stok tersisa 2 hari. Restok segera diperlukan!
+                    </div>
+                    <div class="alert alert-warning">
+                        <strong>⚠️ ALERT PERINGATAN:</strong> Penjualan Sabtu melonjak 180%. Persiapkan stok ekstra.
+                    </div>
+                    <div class="alert alert-info">
+                        <strong>ℹ️ ALERT INFO:</strong> Supplier B mengalami penurunan score. Review diperlukan.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LANGKAH 5: Algorithm Optimization -->
+    <div class="dashboard-card">
+        <h3>🎯 LANGKAH 5: Optimasi & Pembelajaran Algoritma</h3>
+        <p><strong>Memperbaiki dan menyempurnakan algoritma berdasarkan hasil:</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>📊 TRACKING AKURASI</h4>
+                <div class="formula-box">
+                    <strong>Akurasi Prediksi:</strong><br>
+                    =ABS(prediksi - aktual) / aktual * 100<br>
+                    <strong>Success Rate:</strong><br>
+                    =COUNTIF(akurasi_range, "<10%") / COUNT(akurasi_range) * 100
+                </div>
+                
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Algoritma</th>
+                            <th>Akurasi Rata-rata</th>
+                            <th>Success Rate</th>
+                            <th>Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Prediksi Penjualan</td>
+                            <td>87%</td>
+                            <td>73%</td>
+                            <td>+15% (minggu lalu)</td>
+                        </tr>
+                        <tr>
+                            <td>Keputusan Restok</td>
+                            <td>91%</td>
+                            <td>89%</td>
+                            <td>+8% (minggu lalu)</td>
+                        </tr>
+                        <tr>
+                            <td>Supplier Selection</td>
+                            <td>94%</td>
+                            <td>92%</td>
+                            <td>+3% (minggu lalu)</td>
+                        </tr>
+                        <tr>
+                            <td>Timing Promosi</td>
+                            <td>76%</td>
+                            <td>68%</td>
+                            <td>+22% (minggu lalu)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>🔄 ALGORITMA SELF-LEARNING</h4>
+                <div class="formula-box">
+                    <strong>Parameter Adjustment:</strong><br>
+                    new_weight = old_weight + (error * learning_rate)<br>
+                    <strong>Adaptive Threshold:</strong><br>
+                    =AVERAGE(last_30_days) + (STDEV(last_30_days) * confidence_level)
+                </div>
+                
+                <div class="learning-progress">
+                    <div class="progress-item">
+                        <span>Weekend Multiplier</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%"></div>
+                        </div>
+                        <span>1.8x → 1.95x (optimized)</span>
+                    </div>
+                    <div class="progress-item">
+                        <span>Weather Impact</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 92%"></div>
+                        </div>
+                        <span>-20% → -28% (more accurate)</span>
+                    </div>
+                    <div class="progress-item">
+                        <span>Safety Stock Level</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 78%"></div>
+                        </div>
+                        <span>30% → 35% (more conservative)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Algorithm Benefits -->
+    <div class="dashboard-card">
+        <h3>🏆 Hasil Implementasi Algoritma</h3>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">95%</div>
+                <div class="metric-label">Akurasi Keputusan Restok</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">67%</div>
+                <div class="metric-label">Pengurangan Stockout</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">43%</div>
+                <div class="metric-label">Penghematan Waktu</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">28%</div>
+                <div class="metric-label">Peningkatan Profit</div>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h4>❌ SEBELUM ALGORITMA</h4>
+                <ul>
+                    <li>Keputusan berdasarkan feeling</li>
+                    <li>Sering stockout di weekend</li>
+                    <li>Pemilihan supplier tidak konsisten</li>
+                    <li>Timing promosi tidak tepat</li>
+                    <li>Banyak kesalahan manual</li>
+                </ul>
+            </div>
+            <div class="dashboard-card">
+                <h4>✅ SESUDAH ALGORITMA</h4>
+                <ul>
+                    <li>Keputusan berdasarkan data akurat</li>
+                    <li>Stok selalu tersedia optimal</li>
+                    <li>Supplier dipilih objektif</li>
+                    <li>Promosi tepat waktu & efektif</li>
+                    <li>Proses otomatis tanpa error</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-card">
+                <h3>🔄 Algoritma Cek Restok</h3>
+                <div class="formula-box">
+                    <strong>Pseudocode:</strong><br>
+                    1. SET skor_prioritas = 0<br>
+                    2. IF stok_saat_ini < 10 THEN skor_prioritas += 3<br>
+                    3. IF penjualan_3hari/3 > 5 THEN skor_prioritas += 2<br>
+                    4. IF kategori = "fast moving" THEN skor_prioritas += 2<br>
+                    5. IF margin > 20% THEN skor_prioritas += 1<br>
+                    6. IF skor >= 6 THEN "RESTOK SEGERA"<br>
+                    7. ELSE IF skor >= 4 THEN "RESTOK PERLU"<br>
+                    8. ELSE "STOK AMAN"
+                </div>
+                
+                <div class="input-group">
+                    <label>Test Algoritma Restok:</label>
+                    <select id="testProduct" onchange="calculateRestok()">
+                        <option value="">Pilih Produk</option>
+                        <option value="beras">Beras 5kg</option>
+                        <option value="minyak">Minyak 1L</option>
+                        <option value="gula">Gula 1kg</option>
+                    </select>
+                </div>
+                <div id="restokResult"></div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>📊 Sistem Grading Supplier</h3>
+                <div class="formula-box">
+                    <strong>Rumus Penilaian:</strong><br>
+                    Skor = (Ketepatan×0.3) + (Kualitas×0.4) + (Harga×0.2) + (Pelayanan×0.1)<br>
+                    <br>
+                    Grade A: ≥85 (Supplier Utama)<br>
+                    Grade B: 70-84 (Supplier Baik)<br>
+                    Grade C: 60-69 (Supplier Cukup)<br>
+                    Grade D: <60 (Evaluasi Ulang)
+                </div>
+
+                <div class="responsive-table">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th>Supplier</th>
+                                <th>Ketepatan</th>
+                                <th>Kualitas</th>
+                                <th>Harga</th>
+                                <th>Pelayanan</th>
+                                <th>Skor Total</th>
+                                <th>Grade</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CV Maju Jaya</td>
+                                <td>90</td>
+                                <td>85</td>
+                                <td>75</td>
+                                <td>80</td>
+                                <td>84.5</td>
+                                <td><span class="status-badge status-good">B</span></td>
+                                <td>Supplier Baik</td>
+                            </tr>
+                            <tr>
+                                <td>PT Berkah</td>
+                                <td>95</td>
+                                <td>90</td>
+                                <td>85</td>
+                                <td>88</td>
+                                <td>89.9</td>
+                                <td><span class="status-badge status-good">A</span></td>
+                                <td>Supplier Utama</td>
+                            </tr>
+                            <tr>
+                                <td>UD Sejahtera</td>
+                                <td>70</td>
+                                <td>75</td>
+                                <td>80</td>
+                                <td>65</td>
+                                <td>73.5</td>
+                                <td><span class="status-badge status-warning">B</span></td>
+                                <td>Supplier Baik</td>
+                            </tr>
+                            <tr>
+                                <td>CV Mandiri</td>
+                                <td>60</td>
+                                <td>65</td>
+                                <td>70</td>
+                                <td>55</td>
+                                <td>63.5</td>
+                                <td><span class="status-badge status-warning">C</span></td>
+                                <td>Supplier Cukup</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>🎯 Algoritma Strategi Recovery</h3>
+                <div class="formula-box">
+                    <strong>Langkah-langkah Sistematis:</strong><br>
+                    1. WHILE stok_kritis > 0 DO<br>
+                    &nbsp;&nbsp;- Prioritas restok berdasarkan margin dan velocity<br>
+                    &nbsp;&nbsp;- Alokasi budget untuk restok<br>
+                    &nbsp;&nbsp;- Update stok projection<br>
+                    <br>
+                    2. FOR setiap supplier_baru DO<br>
+                    &nbsp;&nbsp;- Hitung skor supplier<br>
+                    &nbsp;&nbsp;- IF skor > supplier_lama THEN test_order<br>
+                    &nbsp;&nbsp;- Monitor performance 2 minggu<br>
+                    <br>
+                    3. IMPLEMENT strategi_promosi<br>
+                    &nbsp;&nbsp;- Weekend promotion 20% off<br>
+                    &nbsp;&nbsp;- Bundle slow-moving dengan fast-moving<br>
+                    &nbsp;&nbsp;- Loyalty program customer tetap<br>
+                    <br>
+                    4. MONITOR progress harian<br>
+                    &nbsp;&nbsp;- Track penjualan vs target<br>
+                    &nbsp;&nbsp;- Adjust strategi jika perlu<br>
+                    &nbsp;&nbsp;- Report mingguan ke Pak Budi
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>🧮 Kalkulator Keputusan Bisnis</h3>
+                <div class="dashboard-grid">
+                    <div class="input-group">
+                        <label>Budget Tersedia (Rp)</label>
+                        <input type="number" id="budgetInput" value="5000000" onchange="calculateStrategy()">
+                    </div>
+                    <div class="input-group">
+                        <label>Target Recovery (%)</label>
+                        <input type="number" id="targetInput" value="25" onchange="calculateStrategy()">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu Deadline (hari)</label>
+                        <input type="number" id="deadlineInput" value="14" onchange="calculateStrategy()">
+                    </div>
+                    <div class="input-group">
+                        <button class="btn" onclick="calculateStrategy()">Hitung Strategi</button>
+                    </div>
+                </div>
+                <div id="strategyResult"></div>
+            </div>
+</div>
+
+         <div id="abstraction" class="tab-content">
+            <div class="section-title">🎭 Abstraksi - Fokus pada Yang Penting</div>
+            
+            <div class="ct-pillar ct-abstraction">
+                <h3><span class="icon">🎭</span>Dari Data Kompleks ke Keputusan Sederhana</h3>
+                <p>Proses abstraksi mengubah data rumit menjadi informasi yang mudah dipahami dan actionable</p>
+            </div>
+
+            <div class="ct-pillar ct-abstraction">
+                <h4>Definisi Abstraksi dalam Computational Thinking</h4>
+                <p style="padding: 1rem;">Abstraksi adalah proses menyederhanakan kompleksitas dengan fokus pada aspek-aspek penting dan mengabaikan detail yang tidak relevan untuk konteks tertentu. Dalam CT, abstraksi memungkinkan kita untuk membuat model yang lebih sederhana dari sistem yang kompleks, sehingga memudahkan pemahaman, analisis, dan pengambilan keputusan. Proses ini melibatkan identifikasi elemen-elemen kunci, pengelompokan informasi berdasarkan tingkat kepentingan, dan penyajian data dalam format yang lebih mudah dicerna oleh target audience. Abstraksi tidak berarti menghilangkan informasi penting, tetapi lebih kepada menyajikan informasi dalam layer yang berbeda sesuai dengan kebutuhan pengguna - dari detail teknis untuk implementor hingga ringkasan eksekutif untuk decision maker.</p>
+            </div>
+
+            <!-- Step 1: Raw Complex Data -->
+            <div class="dashboard-card">
+                <h3>📊 LANGKAH 1: Data Kompleks (Raw Data)</h3>
+                <p><strong>Semua data mentah dari sistem toko:</strong></p>
+                <div class="responsive-table">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th>Produk</th>
+                                <th>Stok</th>
+                                <th>Penjualan 7hr</th>
+                                <th>Velocity</th>
+                                <th>Margin</th>
+                                <th>Supplier</th>
+                                <th>Lead Time</th>
+                                <th>Komplain</th>
+                                <th>Seasonality</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Beras 5kg</td>
+                                <td>8 unit</td>
+                                <td>26 unit</td>
+                                <td>3.7/hari</td>
+                                <td>11.1%</td>
+                                <td>CV Maju Jaya</td>
+                                <td>2 hari</td>
+                                <td>0</td>
+                                <td>Normal</td>
+                            </tr>
+                            <tr>
+                                <td>Minyak 1L</td>
+                                <td>3 unit</td>
+                                <td>54 unit</td>
+                                <td>7.7/hari</td>
+                                <td>25.0%</td>
+                                <td>PT Berkah</td>
+                                <td>1 hari</td>
+                                <td>0</td>
+                                <td>Tinggi</td>
+                            </tr>
+                            <tr>
+                                <td>Gula 1kg</td>
+                                <td>25 unit</td>
+                                <td>20 unit</td>
+                                <td>2.9/hari</td>
+                                <td>25.0%</td>
+                                <td>UD Sejahtera</td>
+                                <td>3 hari</td>
+                                <td>1</td>
+                                <td>Normal</td>
+                            </tr>
+                            <tr>
+                                <td>Sabun Mandi</td>
+                                <td>6 unit</td>
+                                <td>21 unit</td>
+                                <td>3.0/hari</td>
+                                <td>50.0%</td>
+                                <td>CV Mandiri</td>
+                                <td>4 hari</td>
+                                <td>0</td>
+                                <td>Stabil</td>
+                            </tr>
+                            <tr>
+                                <td>Detergen 1kg</td>
+                                <td>9 unit</td>
+                                <td>15 unit</td>
+                                <td>2.1/hari</td>
+                                <td>20.0%</td>
+                                <td>PT Berkah</td>
+                                <td>2 hari</td>
+                                <td>0</td>
+                                <td>Normal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert alert-danger">
+                    <strong>🤯 MASALAH:</strong> Terlalu banyak data! Pak Budi sebagai pemilik toko butuh waktu 30 menit untuk menganalisis setiap kali mau buat keputusan. Ini tidak efisien!
+                </div>
+            </div>
+
+            <!-- Step 2: Identify Key Metrics -->
+            <div class="dashboard-card">
+                <h3>🔍 LANGKAH 2: Identifikasi Metrik Kunci</h3>
+                <p><strong>Dari 9 kolom data, kita fokus pada 3 indikator utama:</strong></p>
+                <div class="dashboard-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">Stok vs Velocity</div>
+                        <div class="metric-label">Berapa hari stok akan habis?</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">Margin Produk</div>
+                        <div class="metric-label">Seberapa menguntungkan?</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">Lead Time</div>
+                        <div class="metric-label">Berapa lama butuh restok?</div>
+                    </div>
+                </div>
+                <div class="formula-box">
+                    <strong>Formula Abstraksi:</strong><br>
+                    Risk Score = (Stok/Velocity) + (100-Margin)/10 + Lead_Time<br>
+                    <br>
+                    Semakin RENDAH skor = Semakin URGENT<br>
+                    Skor < 5 = KRITIS | Skor 5-8 = PERHATIAN | Skor > 8 = AMAN
+                </div>
+            </div>
+
+            <!-- Step 3: Categorize by Priority -->
+            <div class="dashboard-card">
+                <h3>⚡ LANGKAH 3: Kategorisasi Berdasarkan Prioritas</h3>
+                <p><strong>Mengubah angka rumit menjadi kategori sederhana:</strong></p>
+                <div class="responsive-table">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th>Produk</th>
+                                <th>Hari Tersisa</th>
+                                <th>Profitabilitas</th>
+                                <th>Risk Score</th>
+                                <th>Kategori</th>
+                                <th>Prioritas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Minyak 1L</td>
+                                <td>0.4 hari</td>
+                                <td>Tinggi</td>
+                                <td>2.9</td>
+                                <td><span class="status-badge status-danger">KRITIS</span></td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>Beras 5kg</td>
+                                <td>2.2 hari</td>
+                                <td>Rendah</td>
+                                <td>4.1</td>
+                                <td><span class="status-badge status-danger">KRITIS</span></td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>Sabun Mandi</td>
+                                <td>2.0 hari</td>
+                                <td>Sangat Tinggi</td>
+                                <td>6.0</td>
+                                <td><span class="status-badge status-warning">PERHATIAN</span></td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>Detergen 1kg</td>
+                                <td>4.3 hari</td>
+                                <td>Sedang</td>
+                                <td>8.3</td>
+                                <td><span class="status-badge status-warning">PERHATIAN</span></td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>Gula 1kg</td>
+                                <td>8.6 hari</td>
+                                <td>Tinggi</td>
+                                <td>11.1</td>
+                                <td><span class="status-badge status-safe">AMAN</span></td>
+                                <td>5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Step 4: Executive Summary -->
+            <div class="dashboard-card">
+                <h3>🎯 LANGKAH 4: Ringkasan Eksekutif (Yang Dilihat Pak Budi)</h3>
+                <p><strong>Informasi super sederhana yang bisa dipahami dalam 30 detik:</strong></p>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h4>🚨 Alert Prioritas</h4>
+                        <div class="alert alert-danger">
+                            <strong>🔴 URGENT HARI INI:</strong> Restok 2 produk kritis (Minyak & Beras)
+                        </div>
+                        <div class="alert alert-warning">
+                            <strong>🟡 MINGGU INI:</strong> Restok 2 produk lainnya (Sabun & Detergen)
+                        </div>
+                        <div class="alert alert-success">
+                            <strong>🟢 AMAN:</strong> Gula stok masih cukup 8 hari
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h4>💰 Rekomendasi Budget</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                                <strong>Urgent (Hari Ini):</strong> Rp 1,350,000
+                            </li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                                <strong>Penting (3 Hari):</strong> Rp 950,000
+                            </li>
+                            <li style="padding: 8px 0;">
+                                <strong>Total Kebutuhan:</strong> Rp 2,300,000
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Action Items -->
+            <div class="dashboard-card">
+                <h3>✅ LANGKAH 5: Action Items Konkret</h3>
+                <p><strong>Tugas spesifik yang harus dilakukan:</strong></p>
+                
+                <div class="dashboard-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">SEKARANG</div>
+                        <div class="metric-label">Telepon supplier minyak<br>Order 100 unit</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">SIANG INI</div>
+                        <div class="metric-label">Restok beras 50 unit<br>dari CV Maju Jaya</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">BESOK</div>
+                        <div class="metric-label">Cek stok sabun<br>dan detergen</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">MINGGU INI</div>
+                        <div class="metric-label">Evaluasi strategi<br>promosi gula</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefits of Abstraction -->
+            <div class="dashboard-card">
+                <h3>🏆 Manfaat Abstraksi</h3>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h4>❌ SEBELUM (Data Kompleks)</h4>
+                        <ul>
+                            <li>Butuh 30 menit analisis</li>
+                            <li>Sulit fokus pada prioritas</li>
+                            <li>Risiko salah keputusan</li>
+                            <li>Stress karena overwhelmed</li>
+                        </ul>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>✅ SESUDAH (Abstraksi)</h4>
+                        <ul>
+                            <li>Keputusan dalam 30 detik</li>
+                            <li>Jelas prioritas dan aksi</li>
+                            <li>Fokus pada yang penting</li>
+                            <li>Percaya diri dalam bertindak</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        
+    </div>
+
+    <script>
+        // Data produk
+        const products = [
+            {code: 'P001', name: 'Beras 5kg', buyPrice: 45000, sellPrice: 50000, stock: 8, category: 'fast'},
+            {code: 'P002', name: 'Minyak 1L', buyPrice: 12000, sellPrice: 15000, stock: 3, category: 'fast'},
+            {code: 'P003', name: 'Gula 1kg', buyPrice: 8000, sellPrice: 10000, stock: 25, category: 'normal'},
+            {code: 'P004', name: 'Tepung 1kg', buyPrice: 7000, sellPrice: 9000, stock: 15, category: 'normal'},
+            {code: 'P005', name: 'Kopi 100g', buyPrice: 5000, sellPrice: 7000, stock: 12, category: 'normal'},
+            {code: 'P006', name: 'Teh 50g', buyPrice: 3000, sellPrice: 4000, stock: 20, category: 'normal'},
+            {code: 'P007', name: 'Sabun Mandi', buyPrice: 2000, sellPrice: 3000, stock: 6, category: 'fast'},
+            {code: 'P008', name: 'Shampoo 100ml', buyPrice: 8000, sellPrice: 12000, stock: 18, category: 'normal'},
+            {code: 'P009', name: 'Pasta Gigi', buyPrice: 4000, sellPrice: 6000, stock: 22, category: 'normal'},
+            {code: 'P010', name: 'Detergen 1kg', buyPrice: 15000, sellPrice: 18000, stock: 9, category: 'fast'}
+        ];
+
+        // Transaksi Harian
+        const transaksiHarian = [
+            {tanggal: '2025-07-12', produk: 'Kopi Arabica Premium', qty: 25, harga: 15000, total: 375000},
+            {tanggal: '2025-07-12', produk: 'Teh Hijau Organik', qty: 18, harga: 12000, total: 216000},
+            {tanggal: '2025-07-12', produk: 'Roti Croissant', qty: 40, harga: 8000, total: 320000},
+            {tanggal: '2025-07-12', produk: 'Sandwich Tuna', qty: 15, harga: 22000, total: 330000},
+            {tanggal: '2025-07-12', produk: 'Jus Alpukat', qty: 30, harga: 18000, total: 540000}
+        ];
+
+        // Laporan Stok
+        const laporanStok = [
+            {produk: 'Kopi Arabica Premium', stokAwal: 100, terjual: 25, stokAkhir: 75, status: 'Aman'},
+            {produk: 'Teh Hijau Organik', stokAwal: 50, terjual: 18, stokAkhir: 32, status: 'Aman'},
+            {produk: 'Roti Croissant', stokAwal: 80, terjual: 40, stokAkhir: 40, status: 'Aman'},
+            {produk: 'Sandwich Tuna', stokAwal: 20, terjual: 15, stokAkhir: 5, status: 'Alert Restok'},
+            {produk: 'Jus Alpukat', stokAwal: 45, terjual: 30, stokAkhir: 15, status: 'Perlu Restok'}
+        ];
+
+        // Dashboard
+        const dashboard = [
+            {kpiUtama: 'Revenue Harian: Rp 1.781.000 (↑ 15%)', grafik: 'Penjualan Per Jam: Peak 12:00 (180rb)', status: 'Sistem: Normal (99.8% uptime)'},
+            {kpiUtama: 'Jumlah Transaksi: 128 (↑ 8%)', grafik: 'Top Produk: Jus Alpukat (30%)', status: 'Stok Kritis: 2 produk perlu restok'},
+            {kpiUtama: 'Average Order Value: Rp 13.914 (↑ 6%)', grafik: 'Tren Mingguan: Trend naik 15%', status: 'Staff Performance: 8/10 aktif (92%)'},
+            {kpiUtama: 'Conversion Rate: 74% (↓ 2%)', grafik: 'Metode Bayar: QRIS dominan (35%)', status: 'Inventory Alert: 3 produk expired'},
+            {kpiUtama: 'Customer Satisfaction: 4.7/5.0 (stabil)', grafik: 'Kategori: Minuman terlaris (60%)', status: 'Payment Gateway: Semua normal'}
+        ];
+
+        // Data penjualan (simulasi)
+        const salesData = {
+            'beras': [5, 4, 3, 6, 8],
+            'minyak': [8, 10, 12, 9, 15],
+            'gula': [3, 4, 5, 2, 6]
+        };
+
+        // Tab switching
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Populate product data
+
+        function populateTransactionData(){
+            const tbody = document.getElementById('transactionData');
+            tbody.innerHTML = '';
+
+            transaksiHarian.forEach(transaksi => {
+                const row = `
+                    <tr>
+                        <td>
+                            ${transaksi.tanggal}
+                        </td>
+                        <td>
+                            ${transaksi.produk}
+                        </td>
+                        <td>
+                            ${transaksi.qty}
+                        </td>
+                        <td>
+                            ${transaksi.harga}
+                        </td>
+                        <td>
+                            ${transaksi.total}
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row
+            });
+        }
+
+        function populateStockData(){
+            const tbody = document.getElementById('stokData');
+            tbody.innerHTML = '';
+
+            laporanStok.forEach(stok => {
+                const row = `
+                    <tr>
+                        <td>
+                            ${stok.produk}
+                        </td>
+                        <td>
+                            ${stok.stokAwal}
+                        </td>
+                        <td>
+                            ${stok.terjual}
+                        </td>
+                        <td>
+                            ${stok.stokAkhir}
+                        </td>
+                        <td>
+                            ${stok.status}
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row
+            });
+        }
+
+        function populatesDashboardData(){
+            const tbody = document.getElementById('dashboardData');
+            tbody.innerHTML = '';
+
+            dashboard.forEach(dash => {
+                const row = `
+                    <tr>
+                        <td>
+                            ${dash.kpiUtama}
+                        </td>
+                        <td>
+                            ${dash.grafik}
+                        </td>
+                        <td>
+                            ${dash.status}
+                        </td>
+                        
+                    </tr>
+                `;
+                tbody.innerHTML += row
+            });
+        }
+        function populateProductData() {
+            const tbody = document.getElementById('productData');
+            tbody.innerHTML = '';
+            
+            products.forEach(product => {
+                const margin = ((product.sellPrice - product.buyPrice) / product.buyPrice * 100).toFixed(1);
+                const row = `
+                    <tr>
+                        <td>${product.code}</td>
+                        <td>${product.name}</td>
+                        <td>Rp ${product.buyPrice.toLocaleString()}</td>
+                        <td>Rp ${product.sellPrice.toLocaleString()}</td>
+                        <td>${product.stock}</td>
+                        <td>${margin}%</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Calculate restok algorithm
+        function calculateRestok() {
+            const selectedProduct = document.getElementById('testProduct').value;
+            const resultDiv = document.getElementById('restokResult');
+            
+            if (!selectedProduct) {
+                resultDiv.innerHTML = '';
+                return;
+            }
+            
+            // Get product data
+            const productData = {
+                'beras': { stock: 8, sales3days: 17, category: 'fast', margin: 11.1 },
+                'minyak': { stock: 3, sales3days: 36, category: 'fast', margin: 25.0 },
+                'gula': { stock: 25, sales3days: 15, category: 'normal', margin: 25.0 }
+            };
+            
+            const product = productData[selectedProduct];
+            let score = 0;
+            
+            // Calculate score based on algorithm
+            if (product.stock < 10) score += 3;
+            if (product.sales3days / 3 > 5) score += 2;
+            if (product.category === 'fast') score += 2;
+            if (product.margin > 20) score += 1;
+            
+            let decision, statusClass;
+            if (score >= 6) {
+                decision = 'RESTOK SEGERA';
+                statusClass = 'status-danger';
+            } else if (score >= 4) {
+                decision = 'RESTOK PERLU';
+                statusClass = 'status-warning';
+            } else {
+                decision = 'STOK AMAN';
+                statusClass = 'status-safe';
+            }
+            
+            resultDiv.innerHTML = `
+                <div class="dashboard-card">
+                    <h4>Hasil Analisis: ${selectedProduct.charAt(0).toUpperCase() + selectedProduct.slice(1)}</h4>
+                    <table class="excel-table">
+                        <tr><td>Stok Saat Ini</td><td>${product.stock} unit</td></tr>
+                        <tr><td>Penjualan 3 Hari</td><td>${product.sales3days} unit</td></tr>
+                        <tr><td>Kategori</td><td>${product.category}</td></tr>
+                        <tr><td>Margin</td><td>${product.margin}%</td></tr>
+                        <tr><td><strong>Skor Prioritas</strong></td><td><strong>${score}/8</strong></td></tr>
+                        <tr><td><strong>Keputusan</strong></td><td><span class="status-badge ${statusClass}">${decision}</span></td></tr>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Calculate business strategy
+        function calculateStrategy() {
+            const budget = parseInt(document.getElementById('budgetInput').value);
+            const target = parseInt(document.getElementById('targetInput').value);
+            const deadline = parseInt(document.getElementById('deadlineInput').value);
+            
+            // Simple calculation logic
+            const restokBudget = Math.floor(budget * 0.6);
+            const promoBudget = Math.floor(budget * 0.1);
+            const reserveBudget = budget - restokBudget - promoBudget;
+            
+            const dailyTarget = target / deadline;
+            const riskLevel = target > 30 ? 'Tinggi' : target > 15 ? 'Sedang' : 'Rendah';
+            
+            const resultDiv = document.getElementById('strategyResult');
+            resultDiv.innerHTML = `
+                <div class="dashboard-card">
+                    <h4>📋 Rencana Strategi Recovery</h4>
+                    <div class="dashboard-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">Rp ${restokBudget.toLocaleString()}</div>
+                            <div class="metric-label">Budget Restok (60%)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">Rp ${promoBudget.toLocaleString()}</div>
+                            <div class="metric-label">Budget Promosi (10%)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">Rp ${reserveBudget.toLocaleString()}</div>
+                            <div class="metric-label">Budget Cadangan (30%)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">${dailyTarget.toFixed(1)}%</div>
+                            <div class="metric-label">Target Harian</div>
+                        </div>
+                    </div>
+                    <div class="alert alert-${riskLevel === 'Tinggi' ? 'danger' : riskLevel === 'Sedang' ? 'warning' : 'success'}">
+                        <strong>Tingkat Risiko: ${riskLevel}</strong><br>
+                        ${riskLevel === 'Tinggi' ? 'Perlu strategi agresif dan monitoring ketat' : 
+                          riskLevel === 'Sedang' ? 'Strategi moderat dengan monitoring rutin' : 
+                          'Strategi konservatif dengan monitoring normal'}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Update metrics dynamically
+        function updateMetrics() {
+            // Simulate real-time data updates
+            const totalSales = Math.floor(Math.random() * 500000) + 2000000;
+            const totalProfit = Math.floor(totalSales * 0.2);
+            const lowStockCount = Math.floor(Math.random() * 3) + 3;
+            
+            document.getElementById('totalSales').textContent = `Rp ${totalSales.toLocaleString()}`;
+            document.getElementById('totalProfit').textContent = `Rp ${totalProfit.toLocaleString()}`;
+            document.getElementById('lowStockCount').textContent = lowStockCount;
+        }
+
+        // Initialize the application
+        function init() {
+            populateProductData();
+            populateTransactionData();
+            populateStockData();
+            populatesDashboardData();
+            updateMetrics();
+            
+            // Update metrics every 30 seconds
+            setInterval(updateMetrics, 30000);
+        }
+
+        // Run initialization when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
