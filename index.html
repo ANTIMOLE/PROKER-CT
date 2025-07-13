@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workshop CT - Toko Berkah Jaya</title>
-    <style>
+       <style>
         * {
             margin: 0;
             padding: 0;
@@ -15,7 +15,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
+            line-height: 1.6;
         }
 
         .container {
@@ -30,18 +31,18 @@
         .header {
             background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
             color: white;
-            padding: 30px;
+            padding: 30px 20px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 2.5em;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             margin-bottom: 10px;
             font-weight: 700;
         }
 
         .header p {
-            font-size: 1.2em;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             opacity: 0.9;
         }
 
@@ -49,19 +50,23 @@
             display: flex;
             background: #f8f9fa;
             border-bottom: 2px solid #e9ecef;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .tab {
             flex: 1;
-            padding: 15px 20px;
+            min-width: 120px;
+            padding: 15px 10px;
             text-align: center;
             cursor: pointer;
             background: #f8f9fa;
             border: none;
-            font-size: 1.1em;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             font-weight: 600;
             transition: all 0.3s ease;
             position: relative;
+            white-space: nowrap;
         }
 
         .tab:hover {
@@ -77,7 +82,7 @@
 
         .tab-content {
             display: none;
-            padding: 30px;
+            padding: 20px;
             animation: fadeIn 0.5s ease-in-out;
         }
 
@@ -98,21 +103,26 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: clamp(0.8rem, 2vw, 1rem);
         }
 
         .excel-table th {
             background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
             color: white;
-            padding: 15px;
+            padding: 12px 8px;
             text-align: left;
             font-weight: 600;
-            font-size: 1.1em;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
         }
 
         .excel-table td {
-            padding: 12px 15px;
+            padding: 10px 8px;
             border-bottom: 1px solid #e9ecef;
             transition: background 0.3s ease;
+            word-wrap: break-word;
+            max-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .excel-table tr:hover {
@@ -130,15 +140,19 @@
             padding: 15px;
             margin: 15px 0;
             font-family: 'Courier New', monospace;
-            font-size: 0.9em;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            overflow-x: auto;
+            white-space: pre-wrap;
         }
 
         .status-badge {
-            padding: 5px 12px;
+            padding: 4px 8px;
             border-radius: 20px;
-            font-size: 0.85em;
+            font-size: clamp(0.7rem, 1.5vw, 0.85rem);
             font-weight: 600;
             text-transform: uppercase;
+            display: inline-block;
+            margin: 2px;
         }
 
         .status-safe { background: #d4edda; color: #155724; }
@@ -157,19 +171,23 @@
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
             margin: 20px 0;
         }
 
         .metric-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 15px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .metric-card::before {
@@ -189,23 +207,28 @@
         }
 
         .metric-value {
-            font-size: 2.5em;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             font-weight: 700;
             margin-bottom: 10px;
+            z-index: 1;
+            position: relative;
         }
 
         .metric-label {
-            font-size: 1.1em;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             opacity: 0.9;
+            z-index: 1;
+            position: relative;
         }
 
         .section-title {
-            font-size: 1.8em;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
             color: #2c3e50;
             margin: 30px 0 20px 0;
             padding-bottom: 10px;
             border-bottom: 3px solid #3498db;
             position: relative;
+            word-wrap: break-word;
         }
 
         .section-title::after {
@@ -227,6 +250,7 @@
             margin-bottom: 5px;
             font-weight: 600;
             color: #34495e;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
         }
 
         .input-group input, .input-group select {
@@ -234,7 +258,7 @@
             padding: 12px;
             border: 2px solid #e9ecef;
             border-radius: 8px;
-            font-size: 1em;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
             transition: border-color 0.3s ease;
         }
 
@@ -248,13 +272,16 @@
             background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 12px 20px;
             border-radius: 8px;
-            font-size: 1em;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 10px 5px;
+            min-width: 120px;
+            display: inline-block;
+            text-align: center;
         }
 
         .btn:hover {
@@ -271,6 +298,7 @@
             border-radius: 10px;
             margin: 15px 0;
             border-left: 5px solid;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
         }
 
         .alert-success { background: #d4edda; border-color: #27ae60; color: #155724; }
@@ -295,7 +323,7 @@
         .ct-pillar {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             border-radius: 15px;
-            padding: 25px;
+            padding: 20px;
             margin: 20px 0;
             border-left: 5px solid;
         }
@@ -306,7 +334,7 @@
         .ct-algorithm { border-left-color: #9b59b6; }
 
         .icon {
-            font-size: 1.5em;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             margin-right: 10px;
             vertical-align: middle;
         }
@@ -314,20 +342,47 @@
         .responsive-table {
             overflow-x: auto;
             margin: 20px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .button-group .btn {
+            flex: 1;
+            min-width: 140px;
+            margin: 0;
+        }
+
+        /* Responsive breakpoints */
+        @media (max-width: 1200px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 15px;
+            }
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
             .container {
-                margin: 10px;
+                margin: 5px;
                 border-radius: 10px;
             }
             
             .header {
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
+                padding: 20px 15px;
             }
             
             .tabs {
@@ -336,15 +391,183 @@
             
             .tab {
                 padding: 12px;
-                font-size: 1em;
+                min-width: auto;
+                flex: none;
+            }
+            
+            .tab-content {
+                padding: 15px;
             }
             
             .dashboard-grid {
                 grid-template-columns: 1fr;
+                gap: 10px;
             }
             
-            .metric-value {
-                font-size: 2em;
+            .metric-card {
+                padding: 15px;
+                min-height: 100px;
+            }
+            
+            .excel-table th,
+            .excel-table td {
+                padding: 8px 4px;
+                font-size: 0.8rem;
+            }
+            
+            .formula-box {
+                padding: 10px;
+                font-size: 0.8rem;
+            }
+            
+            .ct-pillar {
+                padding: 15px;
+            }
+            
+            .button-group .btn {
+                min-width: 100%;
+                margin: 5px 0;
+            }
+            
+            .section-title {
+                margin: 20px 0 15px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
+            .tab {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+            
+            .tab-content {
+                padding: 10px;
+            }
+            
+            .metric-card {
+                padding: 12px;
+                min-height: 80px;
+            }
+            
+            .excel-table th,
+            .excel-table td {
+                padding: 6px 3px;
+                font-size: 0.7rem;
+            }
+            
+            .dashboard-card {
+                padding: 15px;
+                margin: 10px 0;
+            }
+            
+            .alert {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .input-group input, 
+            .input-group select {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+                min-width: 100px;
+            }
+        }
+
+        /* Landscape orientation optimizations */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .header {
+                padding: 15px;
+            }
+            
+            .tab-content {
+                padding: 15px;
+            }
+            
+            .metric-card {
+                min-height: 80px;
+                padding: 15px;
+            }
+        }
+
+        /* High DPI screens */
+        @media (min-resolution: 2dppx) {
+            .excel-table {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .header {
+                background: #2c3e50 !important;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            .btn {
+                display: none;
+            }
+            
+            .tabs {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+                padding: 0;
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles for keyboard navigation */
+        .tab:focus,
+        .btn:focus,
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: 2px solid #3498db;
+            outline-offset: 2px;
+        }
+
+        /* Touch targets */
+        @media (pointer: coarse) {
+            .btn {
+                min-height: 44px;
+                padding: 12px 20px;
+            }
+            
+            .tab {
+                min-height: 44px;
+                padding: 12px;
             }
         }
     </style>
@@ -440,7 +663,7 @@
                 </table>
             </div>
         </div>
-
+        
         <!-- Decomposition Tab -->
         <div id="decomposition" class="tab-content">
             <div class="section-title">🔧 Dekomposisi - Memecah Masalah Besar Menjadi Bagian Kecil</div>
