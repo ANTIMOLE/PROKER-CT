@@ -12,9 +12,9 @@
 
 ---
 
-## 👋 Selamat Datang, AKS!
+## 👋 Selamat Datang!
 
-Hai **Anak Karang Taruna**! 🎉 Selamat datang di **PROKER-CT**, sebuah workshop interaktif yang mengajarkan konsep **Computational Thinking (CT)** melalui studi kasus nyata pengelolaan *Toko Berkah Jaya*.
+Hai 🎉 Selamat datang di **PROKER-CT**, sebuah workshop interaktif yang mengajarkan konsep **Computational Thinking (CT)** melalui studi kasus nyata pengelolaan *Toko Berkah Jaya*.
 
 > **💡 Apa itu Computational Thinking?**  
 > CT adalah cara berpikir untuk memecahkan masalah dengan 4 pilar utama: **Dekomposisi**, **Pattern Recognition**, **Abstraksi**, dan **Algoritma**.
