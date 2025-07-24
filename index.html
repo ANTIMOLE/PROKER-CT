@@ -570,6 +570,25 @@
                 padding: 12px;
             }
         }
+
+        .pillar-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15) !important;
+}
+
+@media (max-width: 768px) {
+  .ct-pillars {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .hero-section h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  .hero-section p {
+    font-size: 1rem !important;
+  }
+}
     </style>
 </head>
 <body>
@@ -590,79 +609,107 @@
 
         <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content active">
-            <div class="section-title">Dashboard Eksekutif Pak Budi</div>
-            
-            <div class="dashboard-grid">
-                <div class="metric-card">
-                    <div class="metric-value" id="totalSales">Rp 2,145,000</div>
-                    <div class="metric-label">Penjualan Hari Ini</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" id="totalProfit">Rp 434,000</div>
-                    <div class="metric-label">Keuntungan Hari Ini</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" id="lowStockCount">5</div>
-                    <div class="metric-label">Produk Hampir Habis</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" id="topProduct">Minyak Goreng</div>
-                    <div class="metric-label">Produk Terlaris</div>
-                </div>
-            </div>
+  <div class="section-title">🧠 Selamat Datang di PROKER-CT</div>
+  
+  <!-- Hero Section -->
+  <div class="hero-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; text-align: center;">
+    <h2 style="margin: 0 0 1rem 0; font-size: 1.8rem;">Workshop Computational Thinking</h2>
+    <p style="margin: 0; font-size: 1.1rem; opacity: 0.9;">Belajar memecahkan masalah melalui studi kasus Toko Berkah Jaya</p>
+  </div>
 
-            <div class="dashboard-card">
-                <h3>Status Pencapaian Target</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 125%"></div>
-                </div>
-                <p><strong>125%</strong> dari target harian (Rp 1,600,000)</p>
-            </div>
+  <!-- 4 Pilar CT Cards -->
+  <div class="ct-pillars" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    
+    <div class="pillar-card" style="background: #fff; border: 2px solid #e3f2fd; border-radius: 12px; padding: 1.5rem; text-align: center; transition: transform 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🧩</div>
+      <h3 style="color: #1976d2; margin: 0 0 0.5rem 0;">Dekomposisi</h3>
+      <p style="color: #666; margin: 0; line-height: 1.5;">Memecah masalah besar menjadi bagian-bagian kecil yang mudah dikelola</p>
+      <div style="margin-top: 1rem; padding: 0.5rem; background: #f8f9fa; border-radius: 6px; font-size: 0.9rem; color: #495057;">
+        <strong>Contoh:</strong> Toko → Produk → Transaksi → Laporan
+      </div>
+    </div>
 
-            <div class="responsive-table">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th>Metrik Kunci</th>
-                            <th>Nilai Hari Ini</th>
-                            <th>Target</th>
-                            <th>Pencapaian</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Penjualan</td>
-                            <td>Rp 2,145,000</td>
-                            <td>Rp 1,600,000</td>
-                            <td>125%</td>
-                            <td><span class="status-badge status-good">✓ Tercapai</span></td>
-                        </tr>
-                        <tr>
-                            <td>Keuntungan</td>
-                            <td>Rp 434,000</td>
-                            <td>Rp 320,000</td>
-                            <td>136%</td>
-                            <td><span class="status-badge status-good">✓ Tercapai</span></td>
-                        </tr>
-                        <tr>
-                            <td>Stok Aman</td>
-                            <td>15/20</td>
-                            <td>18/20</td>
-                            <td>75%</td>
-                            <td><span class="status-badge status-warning">⚠ Perhatian</span></td>
-                        </tr>
-                        <tr>
-                            <td>Kepuasan Pelanggan</td>
-                            <td>4.2/5</td>
-                            <td>4.0/5</td>
-                            <td>105%</td>
-                            <td><span class="status-badge status-good">✓ Tercapai</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="pillar-card" style="background: #fff; border: 2px solid #e8f5e8; border-radius: 12px; padding: 1.5rem; text-align: center; transition: transform 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+      <h3 style="color: #388e3c; margin: 0 0 0.5rem 0;">Pattern Recognition</h3>
+      <p style="color: #666; margin: 0; line-height: 1.5;">Mengenali pola dan tren dalam data untuk membuat prediksi</p>
+      <div style="margin-top: 1rem; padding: 0.5rem; background: #f8f9fa; border-radius: 6px; font-size: 0.9rem; color: #495057;">
+        <strong>Contoh:</strong> Penjualan tinggi saat weekend
+      </div>
+    </div>
+
+    <div class="pillar-card" style="background: #fff; border: 2px solid #fff3e0; border-radius: 12px; padding: 1.5rem; text-align: center; transition: transform 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+      <h3 style="color: #f57c00; margin: 0 0 0.5rem 0;">Abstraksi</h3>
+      <p style="color: #666; margin: 0; line-height: 1.5;">Menyederhanakan masalah dengan fokus pada hal-hal penting</p>
+      <div style="margin-top: 1rem; padding: 0.5rem; background: #f8f9fa; border-radius: 6px; font-size: 0.9rem; color: #495057;">
+        <strong>Contoh:</strong> Rule "Jika stok < 10, maka restok"
+      </div>
+    </div>
+
+    <div class="pillar-card" style="background: #fff; border: 2px solid #fce4ec; border-radius: 12px; padding: 1.5rem; text-align: center; transition: transform 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+      <h3 style="color: #c2185b; margin: 0 0 0.5rem 0;">Algoritma</h3>
+      <p style="color: #666; margin: 0; line-height: 1.5;">Membuat langkah-langkah sistematis untuk menyelesaikan masalah</p>
+      <div style="margin-top: 1rem; padding: 0.5rem; background: #f8f9fa; border-radius: 6px; font-size: 0.9rem; color: #495057;">
+        <strong>Contoh:</strong> Flowchart proses penjualan
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Study Case Info -->
+  <div class="study-case-info" style="background: #f8f9fa; border-left: 4px solid #28a745; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+    <h3 style="margin: 0 0 1rem 0; color: #28a745;">📚 Studi Kasus: Toko Berkah Jaya</h3>
+    <p style="margin: 0 0 1rem 0; color: #495057; line-height: 1.6;">
+      Dalam workshop ini, kita akan mempelajari Computational Thinking melalui pengelolaan <strong>Toko Berkah Jaya</strong> milik Pak Budi. 
+      Setiap konsep CT akan diaplikasikan langsung untuk memecahkan masalah-masalah nyata dalam bisnis toko kelontong.
+    </p>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <span style="background: #e3f2fd; color: #1976d2; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">📦 Manajemen Stok</span>
+      <span style="background: #e8f5e8; color: #388e3c; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">💰 Analisis Penjualan</span>
+      <span style="background: #fff3e0; color: #f57c00; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">📈 Prediksi Bisnis</span>
+    </div>
+  </div>
+
+  <!-- Navigation Guide -->
+  <div class="navigation-guide" style="background: #ffffff; border: 2px solid #e9ecef; border-radius: 12px; padding: 1.5rem;">
+    <h3 style="margin: 0 0 1rem 0; color: #495057;">🚀 Cara Menggunakan Workshop</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+      
+      <div style="text-align: center; padding: 1rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.5rem;">1️⃣</div>
+        <h4 style="margin: 0 0 0.5rem 0; color: #1976d2;">Mulai dari Dekomposisi</h4>
+        <p style="margin: 0; font-size: 0.9rem; color: #666;">Pelajari cara memecah masalah toko menjadi bagian kecil</p>
+      </div>
+
+      <div style="text-align: center; padding: 1rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.5rem;">2️⃣</div>
+        <h4 style="margin: 0 0 0.5rem 0; color: #388e3c;">Lanjut ke Pattern</h4>
+        <p style="margin: 0; font-size: 0.9rem; color: #666;">Temukan pola dalam data penjualan toko</p>
+      </div>
+
+      <div style="text-align: center; padding: 1rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.5rem;">3️⃣</div>
+        <h4 style="margin: 0 0 0.5rem 0; color: #f57c00;">Praktik Abstraksi</h4>
+        <p style="margin: 0; font-size: 0.9rem; color: #666;">Buat aturan bisnis yang sederhana namun efektif</p>
+      </div>
+
+      <div style="text-align: center; padding: 1rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.5rem;">4️⃣</div>
+        <h4 style="margin: 0 0 0.5rem 0; color: #c2185b;">Susun Algoritma</h4>
+        <p style="margin: 0; font-size: 0.9rem; color: #666;">Buat langkah sistematis memecahkan masalah</p>
+      </div>
+
+    </div>
+    
+    <div style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+      <p style="margin: 0; color: #6c757d; font-style: italic;">💡 Gunakan tab di atas untuk berpindah antar modul pembelajaran</p>
+    </div>
+  </div>
+
+</div>
+
         
         <!-- Decomposition Tab -->
         <div id="decomposition" class="tab-content">
@@ -2262,7 +2309,7 @@
                                 <td>4.3 hari</td>
                                 <td>Sedang</td>
                                 <td>8.3</td>
-                                <td><span class="status-badge status-warning">PERHATIAN</span></td>
+                                td><span class="status-badge status-warning">PERHATIAN</span></td>
                                 <td>4</td>
                             </tr>
                             <tr>
@@ -2310,7 +2357,7 @@
                                 <strong>Total Kebutuhan:</strong> Rp 2,300,000
                             </li>
                         </ul>
-                    </div>
+                    </div><
                 </div>
             </div>
 
